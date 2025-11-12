@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { login } from "../../helpers/queries";
 
 import Swal from "sweetalert2";
 
@@ -16,21 +17,23 @@ const Login = ({ setUsuarioLogueado }) => {
 
   const navegacion = useNavigate();
 
-  const onSubmit = (data) => {
-    if (
-      data.email === import.meta.env.VITE_API_EMAIL &&
-      data.password === import.meta.env.VITE_API_PASSWORD
-    ) {
-      setUsuarioLogueado(true);
-      
+  const onSubmit = async (data) => {
+    const respuesta = await login(data);
+    if (respuesta.status === 200) {
+      //aqui logueo al usuario
+      //1- actualizar el estado
+      const datos = await respuesta.json();
+      setUsuarioLogueado({
+        usuario: datos.usuario,
+        token: datos.token,
+      });
+
       Swal.fire({
-        title: "Bienvenido",
+        title: `Bienvenido ${datos.usuario}`,
         text: "Iniciaste correctamente tu sesión",
         icon: "success",
       });
       navegacion("/administrador");
-     
-      /* aqui loguear al usuario */
     } else {
       Swal.fire({
         title: "Ocurrio un error",

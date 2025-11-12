@@ -9,7 +9,7 @@ const Menu = ({ usuarioLogueado, setUsuarioLogueado }) => {
 
 const navegacion = useNavigate();
   const logout=()=>{
-    setUsuarioLogueado(false);
+    setUsuarioLogueado({});
     navegacion("/");
 
    

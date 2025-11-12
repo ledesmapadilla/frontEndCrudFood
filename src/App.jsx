@@ -15,12 +15,13 @@ BrowserRouter;
 
 function App() {
   const sesionUsuario =
-    JSON.parse(sessionStorage.getItem("usuarioKey")) || false;
+    JSON.parse(sessionStorage.getItem("usuarioKey")) || {};
 
   const productosLS = JSON.parse(localStorage.getItem("productosKey")) || [];
 
   const [usuarioLogueado, setUsuarioLogueado] = useState(sesionUsuario);
   const [productos, setProductos] = useState(productosLS);
+
 
   /* actualiza el localStorage cuando nos logeamos */
   useEffect(() => {
